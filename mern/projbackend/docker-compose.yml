@@ -1,0 +1,22 @@
+version: "3"
+services: 
+  mymongo:
+    build: 
+      context: .
+      dockerfile: Dockerfile.db
+    ports: 
+      - "27017:27017"
+    volumes: 
+      - /var/ecommerceApp/data/db:/data/db
+
+  mynode:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "8000:8000"
+    depends_on: 
+      - "mymongo"
+    volumes: 
+      - /var/ecommerceApp/backend/node_modules
+      - /var/ecommerceApp/projbackend:/var/ecommerceApp/backend
